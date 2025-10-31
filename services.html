@@ -1,0 +1,129 @@
+<<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>market place — drpuff</title>
+  <style>
+    :root{
+      --bg:#0f1724; /* dark navy */
+      --card:#111827;
+      --accent:#7c3aed; /* purple */
+      --muted:#9ca3af;
+      --glass: rgba(255,255,255,0.03);
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#071022);color:#e6eef8;min-height:100vh}
+    .container{max-width:960px;margin:40px auto;padding:24px}
+    header{display:flex;align-items:center;gap:16px}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#4c1d95);display:flex;align-items:center;justify-content:center;font-weight:700;color:white}
+    h1{margin:0;font-size:26px}
+    p.lead{color:var(--muted);margin-top:6px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
+    .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02)}
+    .tag{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--glass);color:var(--muted);font-size:13px;margin-bottom:10px}
+    .service-title{font-size:18px;margin:8px 0}
+    .service-desc{color:var(--muted);font-size:14px;line-height:1.45}
+    .cta{display:flex;gap:12px;margin-top:18px}
+    .btn{background:linear-gradient(90deg,var(--accent),#5b21b6);border:none;color:white;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    footer{margin-top:28px;color:var(--muted);font-size:13px}
+
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:20px}
+    .modal{background:linear-gradient(180deg,#0b1220,#071224);padding:20px;border-radius:12px;max-width:420px;width:100%;box-shadow:0 10px 40px rgba(2,6,23,0.8);border:1px solid rgba(255,255,255,0.03)}
+    .modal h3{margin:0 0 10px}
+    .contact-row{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);margin-bottom:8px}
+    .contact-label{min-width:88px;color:var(--muted);font-size:13px}
+    .contact-value{font-weight:600}
+    .close{background:transparent;border:0;color:var(--muted);cursor:pointer}
+
+    @media (max-width:520px){.container{padding:16px;margin:20px auto}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">DP</div>
+      <div>
+        <h1>Services</h1>
+        <p class="lead">Professional services — fast, confidential, and reliable.</p>
+      </div>
+    </header>
+
+    <main>
+      <div class="grid">
+        <div class="card">
+          <div class="tag">Service</div>
+          <div class="service-title">Premium Consultation</div>
+          <div class="service-desc">One-on-one consultation delivering tailored advice and support. Fast response and discreet handling.</div>
+          <div class="cta">
+            <button class="btn contact-btn">Contact Me</button>
+            <button class="btn ghost">Learn More</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="tag">Service</div>
+          <div class="service-title">Delivery & Support</div>
+          <div class="service-desc">Reliable delivery and ongoing support packages. Custom options available upon request.</div>
+          <div class="cta">
+            <button class="btn contact-btn">Contact Me</button>
+            <button class="btn ghost">Pricing</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="tag">Service</div>
+          <div class="service-title">Custom Requests</div>
+          <div class="service-desc">Have a special requirement? Tell us and we’ll tailor a solution to match your needs.</div>
+          <div class="cta">
+            <button class="btn contact-btn">Contact Me</button>
+            <button class="btn ghost">FAQ</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> drpuff — all rights reserved</div>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="backdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+      <h3 id="contact-title">Contact Me</h3>
+      <div class="contact-row">
+        <div class="contact-label">WhatsApp</div>
+        <div class="contact-value">+44 744 044 4877</div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-label">Telegram</div>
+        <div class="contact-value">@dr_puff420</div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-label">Signal</div>
+        <div class="contact-value">drpuff.10</div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+        <button class="btn" id="closeBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const backdrop = document.getElementById('backdrop');
+    const openBtns = document.querySelectorAll('.contact-btn');
+    const closeBtn = document.getElementById('closeBtn');
+
+    openBtns.forEach(b => b.addEventListener('click', () => {
+      backdrop.style.display = 'flex';
+    }));
+    closeBtn.addEventListener('click', () => backdrop.style.display = 'none');
+    backdrop.addEventListener('click', (e) => { if(e.target===backdrop) backdrop.style.display='none'; });
+  </script>
+</body>
+</html>
